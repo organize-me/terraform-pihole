@@ -12,8 +12,6 @@ variable "timezone" {
   default = "America/Los_Angeles"
 }
 
-<<<<<<< Updated upstream
-=======
 variable "pihole_image" {
   type = string
   default = "pihole/pihole:2024.07.0"
@@ -28,4 +26,3 @@ variable "backup_install_path" {
   type = string
   default = "../bin"
 }
->>>>>>> Stashed changes
