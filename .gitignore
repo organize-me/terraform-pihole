@@ -6,6 +6,6 @@
 *.tfstate
 *.tfstate.backup
 
-backup
-bin
-tmp
+/backup
+/bin
+/tmp
