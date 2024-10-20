@@ -10,7 +10,7 @@ docker run \
   --env "AWS_SECRET=$${AWS_SECRET}" \
   --volume "${TF_VOLUME_PIHOLE_CONFIG}:${TF_VOLUME_DIR}/${TF_VOLUME_PIHOLE_CONFIG}" \
   --volume "${TF_VOLUME_PIHOLE_DNSMASQ}:${TF_VOLUME_DIR}/${TF_VOLUME_PIHOLE_DNSMASQ}" \
-  ${TF_IMAGE_NAME} \
+  "${TF_IMAGE_NAME}" \
   "backup"
 
 # shellcheck disable=SC2181
