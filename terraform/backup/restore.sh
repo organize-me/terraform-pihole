@@ -1,3 +1,3 @@
 #!/bin/sh
 
-echo "Restore script"
+echo "Restore Script"

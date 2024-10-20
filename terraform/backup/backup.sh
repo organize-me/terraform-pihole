@@ -13,7 +13,7 @@ zip -r "$TEMP_DIR/${TF_ARCHIVE_NAME}" pihole_config pihole_dnsmasq
 
 # Upload to S3
 cd "$TEMP_DIR" || exit 1
-aws s3 cp "$TEMP_DIR" "s3://${TF_S3_BACKUP_BUCKET}/${TF_ARCHIVE_NAME}" || exit 1
+aws s3 cp "$TEMP_DIR/${TF_ARCHIVE_NAME}" "s3://${TF_S3_BACKUP_BUCKET}/${TF_ARCHIVE_NAME}" || exit 1
 
 # Clean up
 rm -rf "$TEMP_DIR"

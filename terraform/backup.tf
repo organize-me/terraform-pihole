@@ -44,7 +44,7 @@ resource "docker_image" "backup" {
   triggers = {
     DOCKERFILE     = local_file.dockerfile_backup.content_md5
     BACKUP_SCRIPT  = local_file.backup_script.content_md5
-    RESTORE_SCRIPT = local_file.backup_script.content_md5
+    RESTORE_SCRIPT = local_file.restore_script.content_md5
   }
 
   depends_on = [local_file.dockerfile_backup, local_file.backup_script, local_file.backup_script]
@@ -63,6 +63,19 @@ resource "local_file" "run_backup" {
   })
 }
 
+# Make the backup script executable
+resource "null_resource" "run_backup_exec" {
+  provisioner "local-exec" {
+    command = "chmod +x ${local_file.run_backup.filename}"
+  }
+
+  triggers = {
+    md5 = local_file.run_backup.content_md5
+  }
+
+  depends_on = [local_file.run_backup]
+}
+
 # Script to run the restore script as a Docker container
 resource "local_file" "run_restore" {
   filename = "${var.backup_install_path}/pihole-restore.sh"
@@ -74,4 +87,17 @@ resource "local_file" "run_restore" {
     TF_S3_BACKUP_BUCKET      = var.backup_s3_bucket
     TF_IMAGE_NAME            = docker_image.backup.name
   })
+}
+
+# Make the restore script executable
+resource "null_resource" "run_restore_exec" {
+  provisioner "local-exec" {
+    command = "chmod +x ${local_file.run_restore.filename}"
+  }
+
+  triggers = {
+    md5 = local_file.run_restore.content_md5
+  }
+
+  depends_on = [local_file.run_restore]
 }
