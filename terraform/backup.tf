@@ -54,6 +54,7 @@ resource "docker_image" "backup" {
 resource "local_file" "run_backup" {
   filename = "${var.backup_install_path}/pihole-backup.sh"
   content = templatefile("./backup/run_backup.sh", {
+    TF_PIHOLE_CONTAINER      = docker_container.pihole.name
     TF_VOLUME_DIR            = local.backup_volumes_path
     TF_VOLUME_PIHOLE_CONFIG  = docker_volume.pihole_config.name
     TF_VOLUME_PIHOLE_DNSMASQ = docker_volume.pihole_dnsmasq.name
