@@ -30,13 +30,11 @@ resource "null_resource" "run_backup_exec" {
 
 # Script to run the restore script as a Docker container
 resource "local_file" "run_restore" {
-  filename = "${var.backup_install_path}/pihole-restore.sh"
-  content = templatefile("./backup/pihole-restore.tf.sh", {
-    TF_VOLUME_PIHOLE_CONFIG  = docker_volume.pihole_config.name
-    TF_VOLUME_PIHOLE_DNSMASQ = docker_volume.pihole_dnsmasq.name
+  filename = "${var.backup_install_path}/pihole-download.sh"
+  content = templatefile("./backup/pihole-download.tf.sh", {
+    TF_ARCHIVE_NAME          = var.backup_archive_name
     TF_S3_BACKUP_BUCKET      = var.backup_s3_bucket
     TF_AWS_CLI_IMAGE         = docker_image.aws_cli.name
-    TF_PIHOLE_CONTAINER      = docker_container.pihole.name
   })
 }
 
