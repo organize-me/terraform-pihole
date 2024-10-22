@@ -1,6 +1,5 @@
 resource "docker_image" "pihole" {
-  name = "pihole/pihole:2024.07.0"
-  keep_locally = true
+  name = var.pihole_image
 }
 
 # Create a volume for the pihole configuration
@@ -9,8 +8,8 @@ resource "docker_volume" "pihole_config" {
 }
 
 # Create a volume for the dnsmasq configuration
-resource "docker_volume" "dnsmasq_config" {
-  name = "dnsmasq_config"
+resource "docker_volume" "pihole_dnsmasq" {
+  name = "pihole_dnsmasq"
 }
 
 resource "docker_container" "pihole" {
@@ -32,7 +31,7 @@ resource "docker_container" "pihole" {
   }
   volumes {
     container_path = "/etc/dnsmasq.d"
-    volume_name    = docker_volume.dnsmasq_config.name
+    volume_name    = docker_volume.pihole_dnsmasq.name
     read_only      = false
   }
   networks_advanced {

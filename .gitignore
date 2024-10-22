@@ -5,3 +5,7 @@
 .terraform/
 *.tfstate
 *.tfstate.backup
+
+/backup
+/bin
+/tmp
